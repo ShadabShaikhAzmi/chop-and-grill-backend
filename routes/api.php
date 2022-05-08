@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/user/signup', 'AuthController@registerUser')->name('user.signup');
+Route::post('/user/login', 'AuthController@loginUser')->name('user.login');
