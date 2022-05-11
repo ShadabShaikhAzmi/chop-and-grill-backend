@@ -14,9 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 Route::post('/user/signup', 'AuthController@registerUser')->name('user.signup');
 Route::post('/user/login', 'AuthController@loginUser')->name('user.login');
+
+Route::group(['middleware' => ['auth:sanctum']], function(){
+
+    Route::group(['prefix'=>'category','as'=>'category'], function(){
+        Route::get('/', 'CategoryController@index')->name('category.index');
+        Route::post('/add', 'CategoryController@add')->name('category.add');
+        Route::put('/update/{id}', 'CategoryController@update')->name('category.update');
+        Route::delete('/delete/{id}', 'CategoryController@delete')->name('category.delete');
+    });
+
+});
